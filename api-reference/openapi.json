@@ -8,6 +8,9 @@
     },
     "version": "1.0.0"
   },
+  "x-mcp": {
+    "enabled": true
+  },
   "servers": [
     {
       "url": "http://sandbox.mintlify.com"
