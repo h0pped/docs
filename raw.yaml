@@ -6002,8 +6002,8 @@ paths:
         - accessToken: []
 info:
   title: Modash.io Raw API
-  description: ''
-  version: 1.5.0
+  description: Get public data from Instagram, TikTok, and YouTube
+  version: 1.5.1
   contact:
     name: API Support
     url: https://www.modash.io
@@ -10722,14 +10722,45 @@ components:
       required:
         - imageType
         - base64Image
+    BrandsDictionaryBrandAccount:
+      type: object
+      properties:
+        platform:
+          type: string
+          description: Platform
+          enum:
+            - instagram
+            - tiktok
+            - youtube
+        userId:
+          type: string
+          description: Brand user ID, not available for Youtube
+        domain:
+          type: string
+          description: >-
+            Brand domain (if we do not have the domain then we return the
+            brand's profile URL instead)
+      required:
+        - platform
+        - domain
     BrandsDictionaryBrand:
       type: object
       properties:
         name:
           type: string
           description: Brand name
+        logoUrl:
+          type: string
+          description: Brand logo URL
+        accounts:
+          description: Social platform accounts related to the brand
+          type: array
+          items:
+            $ref: '#/components/schemas/BrandsDictionaryBrandAccount'
       required:
         - name
+        - logoUrl
+        - accounts
     BrandsDictionaryResponse:
       type: object
       properties:
@@ -10738,7 +10769,7 @@ components:
           description: If there is an error
           example: false
         result:
-          description: List of brands
+          description: List of top 5 brands based on the search query
           type: array
           items:
             $ref: '#/components/schemas/BrandsDictionaryBrand'
